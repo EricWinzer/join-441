@@ -11,7 +11,7 @@ let join = {"users": [
   {
     id: 1,
     name: "Anja Schulz",
-    email: "schulz@h"otmail.com,
+    email: "schulz@hotmail.com",
     phone: "+49 2222222222",
     password: "mypassword123",
     login: 0,

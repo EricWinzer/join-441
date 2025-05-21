@@ -87,8 +87,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         <div class="summary-content"> 
 
             <div class="todo">
-                ${createSummaryTodo('./assets/icons/pencil.png', todoCount, 'To-Do')}
-                ${createSummaryTodo('./assets/icons/check.png', doneCount, 'Done')}
+                ${createSummaryTodo('./assets/icons/pencil.svg', todoCount, 'To-Do')}
+                ${createSummaryTodo('./assets/icons/check.svg', doneCount, 'Done')}
             </div>
 
             ${deadlineTask 

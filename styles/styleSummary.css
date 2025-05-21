@@ -29,13 +29,18 @@
     align-items: center;
     justify-content: center;
     gap: 18px;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+    padding: 12px;
 }
+
+
 
 .summary-task-status {
     background-color: white;
     border-radius: 30px;
     height: 168px;
-    width: 520px;
+    width: 560px;
     display: flex;
     align-items: center;
     padding: 20px;
@@ -85,6 +90,9 @@
     height: 69px;
 }
 
+.summary-todo:hover .icon-summary {
+  filter: brightness(0) invert(1); /* macht schwarzes Weiß */
+}
 .number-container {
     display: flex;
     flex-direction: column;
@@ -135,7 +143,8 @@
 .summary-task-status:hover,
 .count:hover,
 .count1:hover {
-    background-color: #e0e0e0;
+    background-color:rgba(42, 54, 71, 1);
+    color: white;
 }
 
 .task-container {
