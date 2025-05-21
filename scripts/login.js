@@ -1,56 +1,91 @@
-import { database, ref, set, get, update, remove, child, onValue } from "./db.js";
+import { loadData, getUsers } from "./db.js";
+
+window.fillForm = fillForm;
+
+<<<<<<< HEAD
+// Sobald das DOM vollständig geladen ist
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById('loginForm');
+    const guestBtn = document.getElementById('guestBtn');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', async function (submit) {
+            submit.preventDefault();
+            console.log('Login');
+            await loadData();
+            loginUser();
+        });
+    }
+
+    if (guestBtn) {
+        guestBtn.addEventListener('click', async function () {
+            console.log('GuestLogin');
+            await loadData();
+=======
+/**
+ * Eventlister for the login buttons.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    let loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async function (submit) {
+            submit.preventDefault();
+            console.log('Login');
+            await loadData();
+            loginUser();
+        });
+    }
+
+    let guestBtn = document.getElementById('guestBtn');
+    if (guestBtn) {
+        guestBtn.addEventListener('click', function () {
+            console.log('GuestLogin');
+>>>>>>> 4b6421a135571e417e0f5d2aab59bc00d3dbf504
+            loginAsGuest();
+        });
+    }
+});
 
 /**
- * This function checks the login data
- * 
- * @param {string} email - The Variable for the Email.
- * @param {string} password - The Variable for the Password.
+ * Prüft Login-Daten
  */
 async function loginUser() {
-    let email = document.getElementById('loginEmail');
-    let password = document.getElementById('loginPassword');
-    user = users.find(u => u.email == email.value && u.password == password.value);
+    const users = getUsers();
+    const email = document.getElementById('loginEmail');
+    const password = document.getElementById('loginPassword');
+
+    const user = users.find(u => u.email === email.value && u.password === password.value);
+
     if (user) {
-        user.login = 1;
-        await saveData('users', user.id);
-        window.location = 'start.html'
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+        window.location.href = 'summary.html';
     } else {
-        location.reload();
+        alert("Falsche Login-Daten!");
     }
-};
+}
+
 /**
- * This Function takes the first Data in DB for Guest-Login
- * 
- * @param {string} id - The Variable for the ID. 
+ * Gast-Login: nimmt Dummy-Daten oder ersten User
  */
-async function loginAsGuest(id) {
-    users[id].login = 1;
-    await saveData('users', users[id]);
-    window.location = 'start.html'
-};
+function loginAsGuest() {
+    const guestUser = {
+        id: 'guest',
+        name: 'Gast',
+        email: 'guest@join.de'
+    };
+
+    localStorage.setItem('loggedInUser', JSON.stringify(guestUser));
+    window.location.href = 'summary.html';
+}
+
 /**
- * This Function is for testing the side. It fills a user and password in the form
- * 
- * @param {string} user - The Variable for the User.
+ * Füllt das Login-Formular testweise mit Daten
  */
 function fillForm() {
-    user = users[1];
-    document.getElementById("email").value = users[1].email;
-    document.getElementById("password").value = users[1].password;
-};
+    const users = getUsers();
+    if (users.length >= 2) {
+        document.getElementById("loginEmail").value = users[1].email;
+        document.getElementById("loginPassword").value = users[1].password;
+    }
+}
 
-
-export function getAllDataRealtime() {
-    const joinDatabaseUsersRef = ref(database, "join/users");
-
-    onValue(joinDatabaseUsersRef, (snapshot) => {
-        snapshot.forEach(childSnapshot => {
-            users.push(childSnapshot.val());
-        });
-
-    });
-
-    console.table(users);
-
-    };
-    

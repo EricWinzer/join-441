@@ -50,7 +50,7 @@
         <header>
             <h3>Kanban Project Management Tool</h3>
             <div class="user-info">
-                <img src="./assets/icons/help.svg" alt="help">
+                <a href="./help.html"><img class="help" src="./assets/icons/help.svg" alt="help"></a>
                 <img src="./assets/icons/profilebadge/sofia.svg" alt="">
             </div>
         </header>
@@ -64,7 +64,7 @@
                             <div class="left-form">
                                 <div>
                                     <label for="title">Title<p class="required-star">*</p></label>
-                                    <input type="text" name="title" placeholder="Enter a title" required>
+                                    <input id="input-title" type="text" name="title" placeholder="Enter a title" required>
                                 </div>
                                 <div>
                                     <label for="description">Description</label>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div>
                                     <label for="date">Due date<p class="required-star">*</p></label>
-                                    <input type="date" lang="en" placeholder="dd/mm/yyyy"  required>
+                                    <input id="input-date" type="date" lang="en" placeholder="dd/mm/yyyy"  required>
                                 </div>                      
                             </div>
 
@@ -101,26 +101,33 @@
                                     <label for="assign">Assigned to</label>
                                     <div class="bg-drop-down">
                                         <div onclick="openAssignedMenu()" class="input-menu">
-                                            <input type="text" placeholder="Select contacts to assign">
+                                            <input type="text" placeholder="Select contacts to assign" id="input-assign">
                                             <img id="arrow-contacts" src="./assets/icons/add_task/arrow_drop_down_down.svg">
                                         </div>
                                         <div class="menu-drop-down" id="contacts">
                                             <div id="menu-drop-down" class="scrollbar"></div>
                                         </div>
-                                        <div id="selectedContacts"></div>
                                     </div>
+                                    <div id="selected-contacts"></div>
                                 </div>
 
                                 <div>
                                     <label for="category">Category<p class="required-star">*</p></label>
                                     <div class="bg-drop-down">
                                         <div onclick="openCategoryMenu()" class="input-menu">
-                                            <input id="category-input" placeholder="Select task category" required>
+                                            <input type="color" class="category-colorpicker hidden" id="category-colorpicker" value="#1ed6c1">
+                                            <input class="category-select" id="category-input" placeholder="Select task category" required>                                            
                                             <img id="arrow-category" src="./assets/icons/add_task/arrow_drop_down_down.svg">
                                         </div>
                                         <div class="menu-drop-down" id="categories">
-                                            <div class="menu-option" onclick="selectCategory('Technical Task')">Technical Task</div>
-                                            <div class="menu-option" onclick="selectCategory('User Story')">User Story</div>
+                                            <div class="menu-option category-menu" onclick="selectCategory(1)">
+                                                <input type="color" class="category-colorpicker" id="category-cpicker-1" value="#1ed6c1" onchange="colorChanged()" onblur="colorPickerBlur()">
+                                                <p id="category-text-1">Technical Task</p>
+                                            </div>
+                                            <div class="menu-option category-menu" onclick="selectCategory(2)">
+                                                <input type="color" class="category-colorpicker" id="category-cpicker-2" value="#0037ff" onchange="colorChanged()" onblur="colorPickerBlur()">
+                                                <p id="category-text-2">User Story</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -145,11 +152,11 @@
                             This field is required
                         </div>
                         <div class="bt-add-task">
-                            <div id="bt-clear">
+                            <div onclick="clearTask()" id="bt-clear">
                                 <p>Clear</p>
                                 <img src="./assets/icons/close.svg">
                             </div>
-                            <div onclick="createTask()" id="bt-create-task">
+                            <div id="bt-create-task">
                                 <p>Create Task</p>
                                 <img src="./assets/icons/check.svg">
                             </div>
@@ -161,7 +168,6 @@
     </section>    
 </body>
 <script type="module" src="./scripts/db.js"></script>
-<script src="./script.js" defer></script>
+<script type="module" src="./script.js" defer></script>
 <script type="module" src="./scripts/add_task.js"></script>
-
 </html>
