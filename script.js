@@ -1,70 +1,63 @@
 import { loadData } from "./scripts/db.js";
-import { getAllDataRealtime } from "./scripts/login.js";
+
+// Entfernt: import { getAllDataRealtime } from "./scripts/login.js";
 
 /**
- * This function initializes the page by calling other functions.
+ * Initializes the page.
  */
-function init(version) {
+function init(version = 0) {
     switch (version) {
         case 0:
             toggleLoadingSpinner();
             loadingSpinner();
             loadData();
-            setTimeout(toggleLoadingSpinner(), 3000);
+            setTimeout(toggleLoadingSpinner, 3000); // ✅ Korrektur: Übergabe als Callback
             break;
 
         default:
             loadData();
             break;
     }
-};
+}
 
 /**
- * This function change the visibility to hidden and back to visible.
- * 
- * @param {string} id - The ID of the element that should be toggled.
- * @param {string} d_none - The class with the display none property.
+ * Toggles visibility by class `d_none`.
  */
 function toggleDNone(id) {
-    document.getElementById(id).classList.toggle('d_none')
-};
-/**
- * This function stops the function from propagating to parent elements.
- * 
- * @param {string} event - The event itself to stop from propagation.
- */
-function noBubbling(event) {
-    event.stopPropagation()
-};
+    document.getElementById(id).classList.toggle('d_none');
+}
 
 /**
- * This function defines the content reference and sets the inner HTML to an empty string.
- * 
- * @param {string} elementID - The ID of the element that should be referenced.
+ * Prevents event bubbling.
+ */
+function noBubbling(event) {
+    event.stopPropagation();
+}
+
+let contentRef;
+
+/**
+ * Sets the content reference and clears it.
  */
 function setContentRef(elementID) {
     contentRef = document.getElementById(elementID);
     contentRef.innerHTML = '';
-};
+}
 
 /**
- * This function toggles the loading spinner on and off.
- * 
- * @param {string} startpage-logo-container - The ID of the element that contains the loading spinner.
+ * Toggles the loading spinner container.
  */
 function toggleLoadingSpinner() {
     toggleDNone('startpage-logo-container');
     setContentRef('startpage-logo-container');
-};
+}
 
 /**
- * This function starts the loading spinner by using a template with another function.
- * 
-* @param {Function} getLoadingSpinnerTemplate() - Insert the template for the loading spinner
+ * Inserts loading spinner template.
  */
 function loadingSpinner() {
     contentRef.innerHTML += getLoadingSpinnerTemplate();
-};
+}
 
 window.onload = () => {
     init();
